@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/css/uikit.min.css"
+    />
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>Books & Authors</title>
+  </head>
+  <body>
+    {% if messages %} {% for message in messages %} {% if message.tags %}
+    <script>
+      alert("{{ message }}");
+    </script>
+    {% endif %} {% endfor %} {% endif %}
+    <h1 class="uk-padding-small">{{libro.title}}</h1>
+    <h3 class="uk-margin-left">ID: {{libro.id}}</h3>
+    <p class="uk-margin-left">Description: {{libro.desc}}</p>
+    <h3 class="uk-margin-left">Authors</h3>
+    <ul class="uk-margin-left uk-list uk-list-disc">
+      {% for autor in libro.autores.all %}
+      <li>{{autor.first_name}} {{autor.last_name}}</li>
+      {% endfor %}
+    </ul>
+    <form action="/add_author" method="GET">
+      <fieldset class="uk-fieldset">
+        {% csrf_token %}
+        <select
+          class="uk-margin uk-margin-left uk-width-1-2 uk-select"
+          name="author"
+        >
+          <option value="0" selected>--Select Option--</option>
+          {% for addautor in addAutors %}
+          <option value="{{addautor.id}}">
+            {{addautor.first_name}} {{addautor.last_name}}
+          </option>
+          {% endfor %}
+        </select>
+        <input
+          class="uk-button uk-button-primary uk-margin-left"
+          type="submit"
+          value="Agregar"
+        />
+      </fieldset>
+      <a class="uk-margin uk-margin-left uk-button uk-button-secondary" href="/"
+        >ATRAS</a
+      >
+    </form>
+  </body>
+</html>

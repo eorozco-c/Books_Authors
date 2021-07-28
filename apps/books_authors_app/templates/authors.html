@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/css/uikit.min.css"
+    />
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <title>Books & Authors</title>
+  </head>
+  <body>
+    <div class="uk-flex uk-flex-center uk-flex-around uk-padding">
+      <div class="uk-flex uk-flex-center uk-width-1-2">
+        <form action="/add_new_author" method="POST">
+          <fieldset class="uk-fieldset">
+            <legend class="uk-legend">Add Author</legend>
+            {% csrf_token %}
+            <div class="uk-margin uk-flex uk-flex-around">
+              <label class="uk-width-1-2" for="first_name">First Name</label>
+              <input
+                class="uk-width-1-2"
+                type="text"
+                name="first_name"
+                id="first_name"
+                required
+              />
+            </div>
+            <div class="uk-margin uk-flex uk-flex-around">
+              <label class="uk-width-1-2" for="last_name">Last Name</label>
+              <input
+                class="uk-width-1-2"
+                type="text"
+                name="last_name"
+                id="last_name"
+                required
+              />
+            </div>
+            <div class="uk-margin uk-flex uk-flex-around">
+              <label class="uk-width-1-2" for="notes">Notes</label>
+              <textarea
+                class="uk-width-1-2"
+                name="notes"
+                id="notes"
+                cols="30"
+                rows="10"
+              ></textarea>
+            </div>
+            <input
+              class="uk-button uk-button-secondary"
+              type="submit"
+              value="Agregar"
+            />
+            <a class="uk-button uk-button-secondary" href="/">LIBROS</a>
+          </fieldset>
+        </form>
+      </div>
+      <div class="uk-width-1-2">
+        <table class="uk-table uk-table-striped uk-table-responsive">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for author in authors %}
+            <tr>
+              <td>{{author.id}}</td>
+              <td>{{author.first_name}} {{author.last_name}}</td>
+              <td><a href="author/{{author.id}}">Views</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
